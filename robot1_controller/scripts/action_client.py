@@ -16,7 +16,7 @@ def call_server():
     client.wait_for_server()
  
     goal = ShowcaseGoal()
-    goal.number_of_minutes = 7
+    goal.number_of_minutes = 3
     client.send_goal(goal, feedback_cb=feedback_cb)
     client.wait_for_result()
     result = client.get_result()
