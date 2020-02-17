@@ -24,18 +24,18 @@ def call_server():
     return result
  
 
-def main(queue):
+def ActionClient(queue):
     sqs = boto3.resource('sqs')
-
     queue = sqs.get_queue_by_name(QueueName='cafe-menu-' + queue)
 
     while 1:
+        rospy.init_node('action_client')
+
         messages = queue.receive_messages(WaitTimeSeconds=5)
         for message in messages:
             print("Message received: {0}".format(message.body))
 
             try:
-                rospy.init_node('action_client')
                 result = call_server()
                 print 'The result is:', result
             except rospy.ROSInterruptException as e:
@@ -46,7 +46,7 @@ def main(queue):
 
 if __name__ == "__main__" :
     print 'start main'
-    main('1')
+    ActionClient('1')
 
 
 

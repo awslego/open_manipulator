@@ -27,5 +27,8 @@
       <param name="moveit_sample_duration"  value="$(arg moveit_sample_duration)"/>
   </node>
 
+  <node name="$(arg use_robot_name)_action_client" pkg="robot1_controller" type="action_client.py">
+  </node>
+
 
 </launch>
