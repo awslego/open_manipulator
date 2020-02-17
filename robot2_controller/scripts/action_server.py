@@ -25,7 +25,10 @@ class ActionServer():
                 self.a_server.set_preempted()
                 success = False
                 break
- 
+
+            # 1) MoveIt에서 작성한 Motion Planning 시나리오를 trigger 하는 방법을 모르겠음.
+            # 2) OM-X를 구동하고 난 뒤에, 진척상황을 체크해야 Action_Client에 FeedBack과 Result를 보낼 수 있는데, 어떻게 체크해야 하는지.
+            # 3) 하나의 Action_Client가 두개의 Action_Server를 Call했을때, 이 각각은 병렬로 처리되는지????
             last_step_completed = 'bowl-' + str(i)
             feedback.last_step_completed = last_step_completed
             result.steps_completed.append(last_step_completed)

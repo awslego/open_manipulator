@@ -2,27 +2,44 @@
  
 import rospy
 import actionlib
+import time
 from open_manipulator_msgs.msg import ShowcaseAction, ShowcaseGoal
 
 import boto3
 import sys
 
+robot2_status = '1'
+robot3_status = '1'
+
 
 def feedback_cb(msg):
     print 'Feedback received:', msg
  
-def call_server():
+def call_server2():
     client = actionlib.SimpleActionClient('showcase_as', ShowcaseAction)
     client.wait_for_server()
  
     goal = ShowcaseGoal()
     goal.number_of_minutes = 3
+    robot2_status = '1'
     client.send_goal(goal, feedback_cb=feedback_cb)
     client.wait_for_result()
     result = client.get_result()
- 
+    robot2_status = '3'
     return result
- 
+
+def call_server3():
+    client = actionlib.SimpleActionClient('showcase_as', ShowcaseAction)
+    client.wait_for_server()
+
+    goal = ShowcaseGoal()
+    goal.number_of_minutes = 3
+    robot3_status = '1'
+    client.send_goal(goal, feedback_cb=feedback_cb)
+    client.wait_for_result()
+    result = client.get_result()
+    robot3_status = '3'
+    return result
 
 def ActionClient(queue):
     sqs = boto3.resource('sqs')
@@ -35,13 +52,27 @@ def ActionClient(queue):
         for message in messages:
             print("Message received: {0}".format(message.body))
 
-            try:
-                result = call_server()
-                print 'The result is:', result
-            except rospy.ROSInterruptException as e:
-                print 'Something went wrong:', e
-            
-            message.delete()
+
+            while 1:
+                if robot2_status != 3 and robot2_status != 3:
+                    time.sleep(1000)
+                    continue
+                try:
+                    if robot2_status == 3:
+                        result = call_server2()
+                        print '[server2] The result is:', result
+                        break
+                    else:
+                        if robot3_status == 3:
+                            result = call_server3()
+                            print '[sever3] The result is:', result
+                            break
+
+
+                except rospy.ROSInterruptException as e:
+                    print 'Something went wrong:', e
+
+                message.delete()
 
 
 if __name__ == "__main__" :
