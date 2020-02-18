@@ -43,7 +43,7 @@ void OpenManipulator::initOpenManipulator(bool using_actual_robot_state, STRING 
             math::vector3(0.012, 0.0, 0.017),                // relative position
             math::convertRPYToRotationMatrix(0.0, 0.0, 0.0), // relative orientation
             Z_AXIS,    // axis of rotation
-            6,        // actuator id
+            1,        // actuator id
             M_PI,      // max joint limit (3.14 rad)
             -M_PI,     // min joint limit (-3.14 rad)
             1.0,       // coefficient

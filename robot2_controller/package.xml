@@ -28,7 +28,7 @@
   <depend>moveit_ros_planning</depend>
   <depend>moveit_ros_planning_interface</depend>
   <depend>robotis_manipulator</depend>
-  <depend>open_manipulator_libs</depend>
+  <depend>open_manipulator_libs2</depend>
   <depend>cmake_modules</depend>
   <depend>boost</depend>
 </package>

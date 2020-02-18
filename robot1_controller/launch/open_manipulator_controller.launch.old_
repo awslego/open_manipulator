@@ -13,11 +13,11 @@
   <arg name="planning_group_name"    default="arm"/>
   <arg name="moveit_sample_duration" default="0.050"/>
 
-  <group ns="robot1_controller" if="$(arg use_moveit)">
-    <include file="$(find robot1_controller)/launch/open_manipulator_moveit.launch">
+  <group ns="robot1_controller">
+    <!--<include file="$(find robot1_controller)/launch/open_manipulator_moveit.launch">
       <arg name="robot_name"      value="$(arg use_robot_name)"/>
       <arg name="sample_duration" value="$(arg moveit_sample_duration)"/>
-    </include>
+    </include>-->
 
       <node name="$(arg use_robot_name)" pkg="robot1_controller" type="robot1_controller" output="screen" args="$(arg dynamixel_usb_port) $(arg dynamixel_baud_rate)">
           <param name="using_platform"       value="$(arg use_platform)"/>
@@ -31,11 +31,12 @@
       </node>
   </group>
 
-  <group ns="robot3_controller" if="$(arg use_moveit)">
-       <include file="$(find robot3_controller)/launch/open_manipulator_moveit.launch">
+
+  <group ns="robot3_controller">
+       <!--<include file="$(find robot3_controller)/launch/open_manipulator_moveit.launch">
           <arg name="robot_name"      value="$(arg use_robot_name3)"/>
           <arg name="sample_duration" value="$(arg moveit_sample_duration)"/>
-       </include>
+       </include>-->
 
        <node name="$(arg use_robot_name3)" pkg="robot3_controller" type="robot3_controller" output="screen" args="$(arg dynamixel_usb_port) $(arg dynamixel_baud_rate)">
            <param name="using_platform"       value="$(arg use_platform)"/>
@@ -45,5 +46,6 @@
            <param name="moveit_sample_duration"  value="$(arg moveit_sample_duration)"/>
        </node>
   </group>
+
 </launch>
 

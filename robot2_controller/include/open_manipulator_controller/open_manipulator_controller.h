@@ -52,7 +52,7 @@
 
 #include "open_manipulator_libs/open_manipulator.h"
 
-namespace open_manipulator_controller
+namespace robot2_controller
 {
 
 class OpenManipulatorController

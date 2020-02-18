@@ -18,7 +18,7 @@
 
 #include "open_manipulator_controller/open_manipulator_controller.h"
 
-using namespace open_manipulator_controller;
+using namespace robot3_controller;
 
 OpenManipulatorController::OpenManipulatorController(std::string usb_port, std::string baud_rate)
 : node_handle_(""),

@@ -2,7 +2,7 @@
 # Set minimum required version of cmake, project name and compile options
 ################################################################################
 cmake_minimum_required(VERSION 2.8.3)
-project(robot1_controller)
+project(open_manipulator_libs2)
 
 add_compile_options(-std=c++11)
 
@@ -10,21 +10,12 @@ add_compile_options(-std=c++11)
 # Find catkin packages and libraries for catkin and system dependencies
 ################################################################################
 find_package(catkin REQUIRED COMPONENTS
-    roscpp
-    std_msgs
-    sensor_msgs
-    geometry_msgs
-    moveit_msgs
-    trajectory_msgs
-    open_manipulator_msgs
     robotis_manipulator
-    open_manipulator_libs1
-    moveit_core
-    moveit_ros_planning
-    moveit_ros_planning_interface
+    roscpp
     cmake_modules
+    dynamixel_workbench_toolbox
 )
-find_package(Boost REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 ################################################################################
 # Setup for python modules and scripts
@@ -43,8 +34,9 @@ find_package(Boost REQUIRED)
 ################################################################################
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp std_msgs sensor_msgs geometry_msgs moveit_msgs trajectory_msgs open_manipulator_msgs robotis_manipulator open_manipulator_libs1 moveit_core moveit_ros_planning  moveit_ros_planning_interface cmake_modules
-  DEPENDS Boost
+  LIBRARIES open_manipulator_libs2
+  CATKIN_DEPENDS roscpp robotis_manipulator dynamixel_workbench_toolbox cmake_modules
+  DEPENDS EIGEN3
 )
 
 ################################################################################
@@ -53,35 +45,30 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${Boost_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
 )
 
-add_executable(robot1_controller src/open_manipulator_controller.cpp)
-add_dependencies(robot1_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(robot1_controller ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_library(open_manipulator_libs2
+  src/open_manipulator.cpp
+  src/custom_trajectory.cpp
+  src/dynamixel.cpp
+  src/kinematics.cpp
+)
+
+add_dependencies(open_manipulator_libs2 ${catkin_EXPORTED_TARGETS})
+target_link_libraries(open_manipulator_libs2  ${catkin_LIBRARIES} ${Eigen3_LIBRARIES})
 
 ################################################################################
 # Install
 ################################################################################
-install(TARGETS robot1_controller
+install(TARGETS open_manipulator_libs2
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-install(PROGRAMS
-  scripts/create_udev_rules
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}  
 )
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-)
-
-install(DIRECTORY launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(FILES 99-open-manipulator-cdc.rules
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ################################################################################
