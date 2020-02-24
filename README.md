@@ -4,20 +4,27 @@
 ### 1.1. Install ROS Setup
 - ROS Setup on Ubuntu http://emanual.robotis.com/docs/en/platform/openmanipulator_x/ros_setup/#install-ubuntu-on-pc
 
-### 1.2. Install Robot Cafe Packages
+### 1.2. Update Robot Cafe Packages for multi robots
 ```
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/awslego/robot-cafe-manipulator.git
+$ git clone https://github.com/awslego/open_manipulator.git
+
+# [0]TH Robot for simulation
+# argv : [n]th module (1:gazebo, 2:controller, 3:gui)
+
+# Simulation example
+$ cd ~/catkin_ws/src/open_manipulator/ 
+$ ./go 0 1 
+$ ./go 0 2 
+$ ./go 0 3
+
+# OM-X example
+$ cd ~/catkin_ws/src/open_manipulator/ 
+$ ./go 0 2 true
+$ ./go 0 3 
+
 
 ```
-
-## Part2: 
-
-
-## part3: 
-
-
-
 
 
 # OpenManipulator
