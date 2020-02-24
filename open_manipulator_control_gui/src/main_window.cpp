@@ -122,7 +122,7 @@ void MainWindow::on_btn_actuator_enable_clicked(void)
 {
   if(!qnode.setActuatorState(true))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 1");
     return;
   }
 
@@ -133,7 +133,7 @@ void MainWindow::on_btn_actuator_disable_clicked(void)
 {
   if(!qnode.setActuatorState(false))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 2");
     return;
   }
 
@@ -152,7 +152,7 @@ void MainWindow::on_btn_init_pose_clicked(void)
 
   if(!qnode.setJointSpacePath(joint_name, joint_angle, path_time))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 3");
     return;
   }
 
@@ -171,7 +171,7 @@ void MainWindow::on_btn_home_pose_clicked(void)
   joint_name.push_back("joint4"); joint_angle.push_back(0.70);
   if(!qnode.setJointSpacePath(joint_name, joint_angle, path_time))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 4");
     return;
   }
   writeLog("Send joint angle to home pose");
@@ -184,7 +184,7 @@ void MainWindow::on_btn_gripper_open_clicked(void)
 
   if(!qnode.setToolControl(joint_angle))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 5");
     return;
   }
 
@@ -197,7 +197,7 @@ void MainWindow::on_btn_gripper_close_clicked(void)
   joint_angle.push_back(-0.01);
   if(!qnode.setToolControl(joint_angle))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 6");
     return;
   }
 
@@ -229,7 +229,7 @@ void MainWindow::on_btn_send_joint_angle_clicked(void)
 
   if(!qnode.setJointSpacePath(joint_name, joint_angle, path_time))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 7");
     return;
   }
 
@@ -255,7 +255,7 @@ void MainWindow::on_btn_send_kinematic_pose_clicked(void)
 
   if(!qnode.setTaskSpacePath(kinematics_pose, path_time))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 8");
     return;
   }
 
@@ -267,7 +267,7 @@ void MainWindow::on_btn_set_gripper_clicked(void)
   joint_angle.push_back(ui.doubleSpinBox_gripper->value());
   if(!qnode.setToolControl(joint_angle))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 9");
     return;
   }
   writeLog("Send gripper value");
@@ -345,7 +345,7 @@ void MainWindow::on_btn_send_drawing_trajectory_clicked(void)
 
   if(!qnode.setDrawingTrajectory(name, arg, path_time))
   {
-    writeLog("[ERR!!] Failed to send service");
+    writeLog("[ERR!!] Failed to send service 10");
     return;
   }
   writeLog("Send drawing trajectory");

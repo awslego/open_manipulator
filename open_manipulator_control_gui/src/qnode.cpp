@@ -53,11 +53,11 @@ QNode::~QNode() {
 }
 
 bool QNode::init() {
-	ros::init(init_argc,init_argv,"open_manipulator_control_gui");
-	if ( ! ros::master::check() ) {
-		return false;
-	}
-	ros::start(); // explicitly needed since our nodehandle is going out of scope.
+  ros::init(init_argc,init_argv,"open_manipulator_control_gui");
+    if ( ! ros::master::check() ) {
+	return false;
+  }
+  ros::start(); // explicitly needed since our nodehandle is going out of scope.
   ros::NodeHandle n("");
 
   // msg publisher
@@ -74,7 +74,7 @@ bool QNode::init() {
   goal_drawing_trajectory_client_ = n.serviceClient<open_manipulator_msgs::SetDrawingTrajectory>("goal_drawing_trajectory");
 
   start();
-	return true;
+  return true;
 }
 
 void QNode::run() {
