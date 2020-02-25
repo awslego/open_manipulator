@@ -10,9 +10,10 @@ $ cd ~/catkin_ws/src
 $ git clone https://github.com/awslego/open_manipulator.git
 
 # [0]TH Robot for simulation
-# argv : [n]th module (1:gazebo, 2:controller, 3:gui)
+# argc : 2
+# argv : [robot-num] [module-num] (1:gazebo, 2:controller, 3:gui)
 
-# Simulation example
+# Solo Simulation example
 $ cd ~/catkin_ws/src/open_manipulator/ 
 $ ./go 0 1 
 $ ./go 0 2 
@@ -23,7 +24,15 @@ $ cd ~/catkin_ws/src/open_manipulator/
 $ ./go 0 2 true
 $ ./go 0 3 
 
+# Multi Simulation example
+$ cd ~/catkin_ws/src/open_manipulator/ 
+$ ./go 0 0 
+$ ./go 0 2 
+$ ./go 0 3
 
+$ ./go 1 2 
+$ ./go 1 3
+ 
 ```
 
 

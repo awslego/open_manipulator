@@ -30,10 +30,10 @@
   <node name="$(arg use_robot_name)_action_client" pkg="open_manipulator_controller" type="action_client.py" args="1" if="$(eval use_robot_name == 'open_manipulator')">
   </node>
 
-  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server.py" args="1" if="$(eval use_robot_name == 'robot1_controller')">
+  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server1.py" args="1" if="$(eval use_robot_name == 'robot1_controller')">
   </node>
 
-  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server.py" args="1" if="$(eval use_robot_name == 'robot2_controller')">
+  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server2.py" args="1" if="$(eval use_robot_name == 'robot2_controller')">
   </node>
 
 </launch>

@@ -10,9 +10,15 @@ fi
 
 ## 0. open_manipulator
 if [ "$1" == "0" ]; then
-  if [ "$2" == "1" ]; then
+  ## multi gazebo
+  if [ "$2" == "0" ]; then
+    echo "roslaunch open_manipulator_gazebo open_manipulator_gazebo_multi.launch"
+    `roslaunch open_manipulator_gazebo open_manipulator_gazebo_multi.launch`
+  ## solo gazebo
+  elif [ "$2" == "1" ]; then
     echo "roslaunch open_manipulator_gazebo open_manipulator_gazebo.launch"
     `roslaunch open_manipulator_gazebo open_manipulator_gazebo.launch`
+  ## controller
   elif [ "$2" == "2" ]; then
     if [ "$3" == "true" ]; then
       echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true"
@@ -21,6 +27,7 @@ if [ "$1" == "0" ]; then
       echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false"
       `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false`
     fi 
+  ## gui
   elif [ "$2" == "3" ]; then
     echo "roslaunch open_manipulator_control_gui open_manipulator_control_gui.launch"
     `roslaunch open_manipulator_control_gui open_manipulator_control_gui.launch`
