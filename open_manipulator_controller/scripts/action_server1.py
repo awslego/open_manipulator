@@ -1,5 +1,6 @@
 #! /usr/bin/env python
  
+import os
 import rospy
 import actionlib
 from open_manipulator_msgs.msg import ShowcaseAction, ShowcaseFeedback, ShowcaseResult
@@ -19,10 +20,34 @@ class ActionServer():
         self.a_server.start()
 
     def work_controller(self):
-        gripperPos = 0.01
-        time = 2
-        moveGripper(robot_name, gripperPos, time)
-        print '[here]\n'
+
+	try:
+    	    path = os.path.dirname(os.path.abspath(__file__))
+    	    f = open(path + '/r1.txt', 'r')
+
+    	    for s in f:
+                print('[' + s.strip() + ']')
+                words = s.strip().split(' ', 1 )
+                p = words[1].split(' ')
+
+                if words[0] == "G" :
+                    moveGripper(p[0], p[1])
+                    time.sleep(float(p[1]))
+                elif words[0] == "J" :
+                    moveJointSpace(p[0], p[1], p[2], p[3], p[4])
+                    time.sleep(float(p[4]))
+                elif words[0] == "T" :
+                    moveTaskSpace(p[0], p[1], p[2], p[3])
+                    time.sleep(float(p[3]))
+                else :
+                    print('--------ERROR1------------')
+
+        except:
+            print('--------ERROR2------------')
+        finally:
+            f.close()
+
+
 
     def execute_cb(self, goal):
         success = True
@@ -38,7 +63,7 @@ class ActionServer():
                 break
 
             print '[' + str(i) + '/' + str(goal.number_of_minutes) + ']----start\n'
-            self.work_controller(robot_name) 
+            self.work_controller() 
             print '[' + str(i) + '/' + str(goal.number_of_minutes) + ']----end\n'
 
             last_step_completed = 'feedback (' + str(i) + ')'

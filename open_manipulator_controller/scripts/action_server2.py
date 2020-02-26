@@ -38,7 +38,7 @@ class ActionServer():
                 break
 
             print '[' + str(i) + '/' + str(goal.number_of_minutes) + ']----start\n'
-            self.work_controller(robot_name) 
+            self.work_controller() 
             print '[' + str(i) + '/' + str(goal.number_of_minutes) + ']----end\n'
 
             last_step_completed = 'feedback (' + str(i) + ')'
