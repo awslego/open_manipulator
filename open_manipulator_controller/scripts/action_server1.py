@@ -62,17 +62,17 @@ class ActionServer():
                 success = False
                 break
 
-            print '[' + str(i) + '/' + str(goal.number_of_minutes) + ']----start\n'
-            self.work_controller() 
-            print '[' + str(i) + '/' + str(goal.number_of_minutes) + ']----end\n'
 
-            last_step_completed = 'feedback (' + str(i) + ')'
+            last_step_completed = '*feedback (' + str(i) + ')'
+            
             feedback.last_step_completed = last_step_completed
             result.steps_completed.append(last_step_completed)
             self.a_server.publish_feedback(feedback)
             rate.sleep()
  
         if success:
+            print '----result------\n'
+            self.work_controller() 
             self.a_server.set_succeeded(result)
  
 

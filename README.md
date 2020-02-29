@@ -14,22 +14,25 @@ $ git clone https://github.com/awslego/open_manipulator.git
 # argv : [robot-num] [module-num] (1:gazebo, 2:controller, 3:gui)
 
 # Solo Simulation example
-$ cd ~/catkin_ws/src/open_manipulator/ 
+$ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts 
 $ ./go 0 1 
 $ ./go 0 2 
 $ ./go 0 3
 
 # OM-X example
-$ cd ~/catkin_ws/src/open_manipulator/ 
+$ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts 
 $ ./go 0 2 true
 $ ./go 0 3 
 
 # Multi Simulation example
-$ cd ~/catkin_ws/src/open_manipulator/ 
+$ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts/ 
+
+# Robot0
 $ ./go 0 0 
 $ ./go 0 2 
 $ ./go 0 3
 
+# Robot1
 $ ./go 1 2 
 $ ./go 1 3
  
