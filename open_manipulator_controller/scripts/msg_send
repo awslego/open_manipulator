@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+## 파라미터가 없으면 종료 
+if [ "$#" -lt 2 ]; then
+    echo "$# is Illegal number of parameters."
+    echo "Usage: $0 [queue_num] [msg]"
+    exit 1
+fi
+
+
+
+echo "sqs sender : $2"
+python ~/nodejs/awslego/robot-cafe/python-sqs-consumer/sqs-message-sender.py $1 $2 

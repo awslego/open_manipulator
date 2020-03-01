@@ -2,6 +2,7 @@
  
 import os
 import rospy
+import time
 import actionlib
 from open_manipulator_msgs.msg import ShowcaseAction, ShowcaseFeedback, ShowcaseResult
  
@@ -11,12 +12,11 @@ from robot1_controller.moveJointSpace import moveJointSpace
 from robot1_controller.readMovingStat import readMovingStat
 from robot1_controller.setDynamixelTorque import setTorque
 
-
 class ActionServer():
  
     def __init__(self):
         self.a_server = actionlib.SimpleActionServer(
-            "showcase_as", ShowcaseAction, execute_cb=self.execute_cb, auto_start=False)
+            "showcase_as1", ShowcaseAction, execute_cb=self.execute_cb, auto_start=False)
         self.a_server.start()
 
     def work_controller(self):
@@ -39,8 +39,6 @@ class ActionServer():
                 elif words[0] == "T" :
                     moveTaskSpace(p[0], p[1], p[2], p[3])
                     time.sleep(float(p[3]))
-                else :
-                    print('--------ERROR1------------')
 
         except:
             print('--------ERROR2------------')
@@ -62,8 +60,7 @@ class ActionServer():
                 success = False
                 break
 
-
-            last_step_completed = '*feedback (' + str(i) + ')'
+            last_step_completed = '[1] feedback(' + str(i) + ')'
             
             feedback.last_step_completed = last_step_completed
             result.steps_completed.append(last_step_completed)
@@ -71,13 +68,13 @@ class ActionServer():
             rate.sleep()
  
         if success:
-            print '----result------\n'
+            print '\n----result------'
             self.work_controller() 
             self.a_server.set_succeeded(result)
  
 
 if __name__ == "__main__" :
-    rospy.init_node("action_server")
+    rospy.init_node("action_server1")
     s = ActionServer()
     rospy.spin()
 
