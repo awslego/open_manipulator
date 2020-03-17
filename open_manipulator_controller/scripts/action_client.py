@@ -8,6 +8,7 @@ import rospy
 import time
 import actionlib
 from open_manipulator_msgs.msg import ShowcaseAction, ShowcaseGoal
+from datetime import datetime
 
 from open_manipulator.moveGripper import moveGripper
 from open_manipulator.moveTaskSpace import moveTaskSpace
@@ -23,6 +24,29 @@ from re import compile, MULTILINE
 in_queue_empty = True;
 out_queue1_empty = True;
 out_queue2_empty = True;
+
+def wait_until(execute_time):
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S') 
+    t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S') 
+    
+    print t1 
+    print t2 
+    
+    diff = (t1 - t2).total_seconds()
+    print diff
+    if (diff <= float(0)) and (diff >= float(-0.1)) :
+    	print "ok"
+	return True
+    elif diff < float(-0.1):
+        print "invalid"
+	return False
+    else:
+    	print "wait start"
+        time.sleep(diff)
+    	print "wait end"
+	return True
+
 
 def feedback_cb(msg):
     print 'Feedback received:', msg
@@ -194,15 +218,11 @@ def main(num):
        		print '--------result--------'   
        		in_queue_empty = False 
 
-
                 # message parsing 
-                # ex. D1|20200317150000, A1|Brazil|Large
-                #
-		if message.body == 'D':  # D1
+		if message.body[0] == 'D':  # D1
                     in_queue.put(message.body)
-                    # waiting until the reuired time
-                    #
-       		    work_controller("r0.D1.txt")
+                    wait_until(message.body[3:])
+       		    work_controller("r0."+ message.body[0:1] +".txt")
 
                 else:  # A1, A2, A3
        		    work_controller("r0.txt")
