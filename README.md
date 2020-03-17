@@ -56,7 +56,7 @@ $ ./msg_send 1 A1|Brazil|Large
 $ ./msg_send 1 "D1|2020-03-17 22:10:00" 
 ```
 
-![img](https://github.com/awslego/open_manipulator/blob/master/msg.png)
+<img src='https://github.com/awslego/open_manipulator/blob/master/msg.png' width=70%></img>
 
 
 # OpenManipulator
