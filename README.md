@@ -7,7 +7,17 @@
 ### 1.2. Update Robot Cafe Packages for multi robots
 ```
 $ cd ~/catkin_ws/src
+# robotis package
+$ git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+$ git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
+$ git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
+$ git clone https://github.com/ROBOTIS-GIT/open_manipulator_simulations.git
+$ git clone https://github.com/ROBOTIS-GIT/robotis_manipulator.git
+# aws package install
 $ git clone https://github.com/awslego/open_manipulator.git
+$ git clone https://github.com/awslego/open_manipulator_msg.git
+
+$ cd ~/catkin_ws && catkin_make
 
 # [0]TH Robot for simulation
 # argc : 2

@@ -41,10 +41,10 @@ def call_server(topic_name):
     return result
 
 
-def work_controller():
+def work_controller(file_name):
     try:
        path = os.path.dirname(os.path.abspath(__file__))
-       f = open(path + '/r0.txt', 'r')
+       f = open(path + '/' + file_name, 'r')
 
        for s in f:
            print('[' + s.strip() + ']')
@@ -191,10 +191,22 @@ def main(num):
                 global start 
                 start = time.time()
 
-       		print '--------result--------'     
+       		print '--------result--------'   
        		in_queue_empty = False 
-       		work_controller()
-                in_queue.put(message.body)
+
+
+                # message parsing 
+                # ex. D1|20200317150000, A1|Brazil|Large
+                #
+		if message.body == 'D':  # D1
+                    in_queue.put(message.body)
+                    # waiting until the reuired time
+                    #
+       		    work_controller("r0.D1.txt")
+
+                else:  # A1, A2, A3
+       		    work_controller("r0.txt")
+                    in_queue.put(message.body)
 
             except rospy.ROSInterruptException as e:
                 print 'Something went wrong:', e
