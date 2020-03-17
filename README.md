@@ -21,34 +21,39 @@ $ cd ~/catkin_ws && catkin_make
 
 # [0]TH Robot for simulation
 # argc : 2
-# argv : [robot-num] [module-num] (1:gazebo, 2:controller, 3:gui)
+# argv : [robot-num] [module-num] (0: gazebo-all 1:gazebo, 2:controller, 3:gui)
 
 # 1) Solo Simulation example
 $ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts 
-$ ./go 0 1 
-$ ./go 0 2 
-$ ./go 0 3
+$ ./go 0 1        // 0th robot gazebo 
+$ ./go 0 2        // 0th robot controller-simulation 
+$ ./go 0 3        // 0th robot gui
 
 # 2) OM-X example
 $ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts 
-$ ./go 0 2 true
-$ ./go 0 3 
+$ ./go 0 2 true   // 0th robot controller-real
+$ ./go 0 3        // 0th robot gui 
 
 # 3) Multi Simulation example
 $ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts/ 
 
 # Robot0
-$ ./go 0 0 
-$ ./go 0 2 
+$ ./go 0 0        // gazebo-all  
+$ ./go 0 2        // 0th robot controller-simulation 
 
 # Robot1
-$ ./go 1 2 
+$ ./go 1 2        // 1th robot controller-simulation 
  
 # Robot2
-$ ./go 2 2 
+$ ./go 2 2        // 2th robot controller-simulation
 
-# SQS Send
-$ ./msg_send 1 1
+# SQS Send (Bardender Mode)
+# argc : 2
+# argv : [sqs-num] [message] (A:bartender, D:Dancer)
+$ ./msg_send 1 A1|Brazil|Large
+
+# SQS Send (Dancer Mode)
+$ ./msg_send 1 "D1|2020-03-17 22:10:00" 
 ```
 
 
