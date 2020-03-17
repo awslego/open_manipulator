@@ -14,7 +14,7 @@ $ git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
 $ git clone https://github.com/ROBOTIS-GIT/robotis_manipulator.git
 # aws package install
 $ git clone https://github.com/awslego/open_manipulator.git
-$ git clone https://github.com/awslego/open_manipulator_msg.git
+$ git clone https://github.com/awslego/open_manipulator_msgs.git
 $ git clone https://github.com/awslego/open_manipulator_simulations.git
 
 $ cd ~/catkin_ws && catkin_make
