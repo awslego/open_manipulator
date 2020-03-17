@@ -4,11 +4,11 @@
 ## 파라미터가 없으면 종료 
 if [ "$#" -lt 2 ]; then
     echo "$# is Illegal number of parameters."
-    echo "Usage: $0 [queue_num] [msg]"
+    echo "Usage: $0 1 'A1|Brazil|Large'"
+    echo "Usage: $0 1 'D1|2020-03-17 22:10:00'"
     exit 1
 fi
 
 
-
 echo "sqs sender : $2"
-python ./python-sqs-consumer/sqs-message-sender.py $1 $2 
+python ./python-sqs-consumer/sqs-message-sender.py $1 "$2"

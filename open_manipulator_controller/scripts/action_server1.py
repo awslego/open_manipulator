@@ -5,12 +5,49 @@ import rospy
 import time
 import actionlib
 from open_manipulator_msgs.msg import ShowcaseAction, ShowcaseFeedback, ShowcaseResult
+from datetime import datetime
  
 from robot1_controller.moveGripper import moveGripper
 from robot1_controller.moveTaskSpace import moveTaskSpace
 from robot1_controller.moveJointSpace import moveJointSpace
 from robot1_controller.readMovingStat import readMovingStat
 from robot1_controller.setDynamixelTorque import setTorque
+
+
+def wait_file_read(file_name):
+    try:
+        path = os.path.dirname(os.path.abspath(__file__))
+	f = open(path + '/' + file_name, 'r')
+        line = f.readline()
+    except:
+        print 'error'
+    finally:
+        f.close()  
+	return line.strip()
+
+
+def wait_until(execute_time):
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S')
+    t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S')
+
+    #print t1
+    #print t2
+
+    diff = (t1 - t2).total_seconds()
+    #print diff
+    if (diff <= float(0)) and (diff >= float(-0.1)) :
+        print "ok"
+        return True
+    elif diff < float(-0.1):
+        print "invalid"
+        return False
+    else:
+        print "wait start"
+        time.sleep(diff)
+        print "wait end"
+        return True
+
 
 class ActionServer():
  
@@ -19,11 +56,11 @@ class ActionServer():
             "showcase_as1", ShowcaseAction, execute_cb=self.execute_cb, auto_start=False)
         self.a_server.start()
 
-    def work_controller(self):
+    def work_controller(self, file_name):
 
 	try:
     	    path = os.path.dirname(os.path.abspath(__file__))
-    	    f = open(path + '/r1.txt', 'r')
+    	    f = open(path + '/' + file_name, 'r')
 
     	    for s in f:
                 print('[' + s.strip() + ']')
@@ -60,6 +97,7 @@ class ActionServer():
                 success = False
                 break
 
+            print '\n----feedback['+str(i)+']------'
             last_step_completed = '[1] feedback(' + str(i) + ')'
             
             feedback.last_step_completed = last_step_completed
@@ -68,9 +106,17 @@ class ActionServer():
             rate.sleep()
  
         if success:
-            print '\n----result------'
-            self.work_controller() 
             self.a_server.set_succeeded(result)
+            
+            if goal.number_of_minutes == 1:
+                print '\n----result[D]------'
+                execute_time = wait_file_read("r0.D1.tm")
+                result = wait_until(execute_time)
+                if result:
+                    self.work_controller("r0.D1.txt") 
+            else:
+                print '\n----result[B]------'
+                self.work_controller("r1.txt") 
  
 
 if __name__ == "__main__" :

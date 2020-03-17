@@ -24,17 +24,18 @@ from re import compile, MULTILINE
 in_queue_empty = True;
 out_queue1_empty = True;
 out_queue2_empty = True;
+msg_type = ''
 
 def wait_until(execute_time):
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S') 
     t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S') 
     
-    print t1 
-    print t2 
+    #print t1 
+    #print t2 
     
     diff = (t1 - t2).total_seconds()
-    print diff
+    #print diff
     if (diff <= float(0)) and (diff >= float(-0.1)) :
     	print "ok"
 	return True
@@ -48,6 +49,17 @@ def wait_until(execute_time):
 	return True
 
 
+def wait_file_write(file_name, execute_time):
+    try:
+        path = os.path.dirname(os.path.abspath(__file__))
+	f = open(path + '/' + file_name, 'w')
+        f.write(execute_time)
+    except:
+        print 'error'
+    finally:
+        f.close()  
+
+
 def feedback_cb(msg):
     print 'Feedback received:', msg
 
@@ -57,7 +69,12 @@ def call_server(topic_name):
     client.wait_for_server()
  
     goal = ShowcaseGoal()
-    goal.number_of_minutes = 1 
+    goal.number_of_minutes = 2 
+
+    global msg_type
+    if msg_type == 'D':
+        goal.number_of_minutes = 1 
+	
  
     client.send_goal(goal, feedback_cb=feedback_cb)
     client.wait_for_result()
@@ -215,16 +232,26 @@ def main(num):
                 global start 
                 start = time.time()
 
-       		print '--------result--------'   
        		in_queue_empty = False 
 
                 # message parsing 
-		if message.body[0] == 'D':  # D1
-                    in_queue.put(message.body)
-                    wait_until(message.body[3:])
-       		    work_controller("r0."+ message.body[0:1] +".txt")
+                global msg_type
+		if message.body[0] == 'D': 
+       		    print '--------result[D]--------'   
+                    msg_type = 'D'
+                    wait_file_write("r0.D1.tm", message.body[3:])
+                    out_queue1.put(message.body)
+                    out_queue2.put(message.body)
+                    
+                    result = wait_until(message.body[3:])
+                    if result:
+                        work_controller("r0.D1.txt")
+            
+	            in_queue_empty = True
 
-                else:  # A1, A2, A3
+                else: 
+       		    print '--------result[B]--------'   
+                    msg_type = ''
        		    work_controller("r0.txt")
                     in_queue.put(message.body)
 
