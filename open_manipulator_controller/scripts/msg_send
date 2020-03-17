@@ -11,4 +11,4 @@ fi
 
 
 echo "sqs sender : $2"
-python ~/nodejs/awslego/robot-cafe/python-sqs-consumer/sqs-message-sender.py $1 $2 
+python ./python-sqs-consumer/sqs-message-sender.py $1 $2 
