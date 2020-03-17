@@ -53,6 +53,8 @@ $ ./go 2 2        // 2th robot controller-simulation
 $ ./msg_send 1 A1|Brazil|Large
 
 # SQS Send (Dancer Mode)
+# argc : 2
+# argv : [sqs-num] [D1|YYYY-mm-dd hh:mm:ss] (future time)
 $ ./msg_send 1 "D1|2020-03-17 22:10:00" 
 ```
 
