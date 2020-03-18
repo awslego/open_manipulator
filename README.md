@@ -47,12 +47,19 @@ $ ./go 1 2        // 1th robot controller-simulation
 # Robot2
 $ ./go 2 2        // 2th robot controller-simulation
 
-# SQS Send (Bardender Mode)
+
+
+# OM-X Moving Test (Joint, Task, Gripper)
+$ ./python r0.py  // 0th robot, edit r0.txt 
+$ ./python r1.py  // 1th robot, edit r1.txt
+$ ./python r2.py  // 2th robot, edit r2.txt
+
+# SQS Send Test (Bardender Mode)
 # argc : 2
 # argv : [sqs-num] [message] (A:bartender, D:Dancer)
 $ ./msg_send 1 A1|Brazil|Large
 
-# SQS Send (Dancer Mode)
+# SQS Send Test (Dancer Mode)
 # argc : 2
 # argv : [sqs-num] [D1|YYYY-mm-dd hh:mm:ss] (future time)
 $ ./msg_send 1 "D1|2020-03-17 22:10:00" 
