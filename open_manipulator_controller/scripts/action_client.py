@@ -257,6 +257,7 @@ def main(num):
 
             except rospy.ROSInterruptException as e:
                 print 'Something went wrong:', e
+                message.delete()
 
             message.delete()
 
