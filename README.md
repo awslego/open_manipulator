@@ -63,6 +63,14 @@ $ ./msg_send 1 A1|Brazil|Large
 # argc : 2
 # argv : [sqs-num] [D1|YYYY-mm-dd hh:mm:ss] (future time)
 $ ./msg_send 1 "D1|2020-03-17 22:10:00" 
+
+
+# for time sync
+$ cd ~/catkin_ws/src/open_manipulator/open_manipulator_controller/scripts/ 
+$ sudo apt-get install rdate
+$ sudo ./time-sync.cron 
+$ sudo cp time-sync.cron /etc/cron.daily
+
 ```
 
 <img src='https://github.com/awslego/open_manipulator/blob/master/msg.png' width=80%></img>
