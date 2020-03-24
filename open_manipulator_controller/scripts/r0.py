@@ -1,15 +1,24 @@
 #!/usr/bin/python
 import time
 import os
+import sys
 from open_manipulator.moveGripper import moveGripper
 from open_manipulator.moveTaskSpace import moveTaskSpace
 from open_manipulator.moveJointSpace import moveJointSpace
 from open_manipulator.readMovingStat import readMovingStat
 from open_manipulator.setDynamixelTorque import setTorque
 
+file_name = "r0.txt"
+if len(sys.argv)>1:
+    print 'init mode'
+    file_name = sys.argv[1] 
+
+#readMovingStat()
+setTorque("on")
 try:
     path = os.path.dirname(os.path.abspath(__file__))
-    f = open(path + '/r0.txt', 'r')
+    f = open(path + '/' + file_name, 'r')
+    
     for s in f:
         print('[' + s.strip() + ']')
         words = s.strip().split(' ', 1 )
@@ -34,3 +43,5 @@ except:
     print('error');
 finally:
     f.close()
+
+#setTorque("off");

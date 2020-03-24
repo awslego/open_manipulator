@@ -1,15 +1,26 @@
 #!/usr/bin/python
 import time
 import os
+import sys
 from robot2_controller.moveGripper import moveGripper
 from robot2_controller.moveTaskSpace import moveTaskSpace
 from robot2_controller.moveJointSpace import moveJointSpace
 from robot2_controller.readMovingStat import readMovingStat
 from robot2_controller.setDynamixelTorque import setTorque
 
+file_name = "r2.txt"
+if len(sys.argv)>1:
+    print 'init mode'
+    file_name = sys.argv[1]
+
+
+
+#readMovingStat()
+setTorque("on")
+
 try:
     path = os.path.dirname(os.path.abspath(__file__))
-    f = open(path + '/r2.txt', 'r')
+    f = open(path + '/' + file_name, 'r')
     for s in f:
         print('[' + s.strip() + ']')
         words = s.strip().split(' ', 1 )

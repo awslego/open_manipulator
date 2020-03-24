@@ -83,6 +83,9 @@ def call_server(topic_name):
 
 
 def work_controller(file_name):
+    #readMovingStat()
+    setTorque("on")
+
     try:
        path = os.path.dirname(os.path.abspath(__file__))
        f = open(path + '/' + file_name, 'r')

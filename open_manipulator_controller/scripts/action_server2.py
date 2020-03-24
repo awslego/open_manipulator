@@ -57,6 +57,8 @@ class ActionServer():
         self.a_server.start()
 
     def work_controller(self, file_name):
+        #readMovingStat()
+        setTorque("on")
 
 	try:
     	    path = os.path.dirname(os.path.abspath(__file__))
