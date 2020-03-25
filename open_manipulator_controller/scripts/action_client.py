@@ -25,6 +25,45 @@ in_queue_empty = True;
 out_queue1_empty = True;
 out_queue2_empty = True;
 msg_type = ''
+order_id = ''
+
+def ddb_handle(oid):
+    #response = table.query (
+    #    KeyConditionExpression=Key('coffeeType').eq('Americano')& Key('isCurrent').eq('true')
+    #)
+    #print '--------'
+    #print response['Items']
+    #if response['Items']['order_id']:
+    #    response = table.put_item(
+    #        Item={
+    #            'order_id':  response['Items']['order_id'],
+    #            'timestamp' :  response['Items']['timestamp'] ,
+    #            'isCurrent': 'false',
+    #            'status': 'complete',
+    #        }
+    #   )
+    response = table.query (
+        KeyConditionExpression=Key('order_id').eq(oid)
+    )
+    print '--------'
+    print response['Items'][0]['order_id']
+
+    if response['Items'][0]['order_id']:
+        response = table.put_item(
+            Item={
+                'order_id':  response['Items'][0]['order_id'],
+                'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
+                'coffeeType' :  response['Items'][0]['coffeeType'] ,
+                'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
+                'timestamp' :  response['Items'][0]['timestamp'] ,
+                'isCurrent': 'true',
+                'status': 'complete',
+            }
+        )
+    else:
+        print 'error : update isCurrent and status'
+
+
 
 def wait_until(execute_time):
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -172,6 +211,10 @@ class ThreadRun1(Thread):
             global out_queue1_empty
             out_queue1_empty = True
 
+            global msg_type
+            global order_id
+            if msg_type == '':
+                ddb_handle(order_id) 
 
 class ThreadRun2(Thread):
     def __init__(self, out_queue2):
@@ -194,6 +237,11 @@ class ThreadRun2(Thread):
             self.out_queue2.task_done()
             global out_queue2_empty
             out_queue2_empty = True
+
+            global msg_type
+            global order_id
+            if msg_type == '':
+                ddb_handle(order_id) 
 
 
 def main(num):
@@ -239,6 +287,7 @@ def main(num):
 
                 # message parsing 
                 global msg_type
+                global order_id
 		if message.body[0] == 'D': 
        		    print '--------result[D]--------'   
                     msg_type = 'D'
@@ -255,6 +304,8 @@ def main(num):
                 else: 
        		    print '--------result[B]--------'   
                     msg_type = ''
+                    order_id = message.body[0:1]
+
        		    work_controller("r0.txt")
                     in_queue.put(message.body)
 
