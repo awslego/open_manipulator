@@ -118,7 +118,7 @@ class ActionServer():
                     self.work_controller("r0.D1.txt") 
             else:
                 print '\n----result[B]------'
-                self.work_controller("r1.txt") 
+                ####self.work_controller("r1.txt") 
  
 
 if __name__ == "__main__" :

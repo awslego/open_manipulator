@@ -21,34 +21,49 @@ from threading import Thread
 from urllib2 import urlopen
 from re import compile, MULTILINE
 
+from boto3.dynamodb.conditions import Key
+
 in_queue_empty = True;
 out_queue1_empty = True;
 out_queue2_empty = True;
 msg_type = ''
 order_id = ''
 
-def ddb_handle(oid):
-    #response = table.query (
-    #    KeyConditionExpression=Key('coffeeType').eq('Americano')& Key('isCurrent').eq('true')
-    #)
-    #print '--------'
-    #print response['Items']
-    #if response['Items']['order_id']:
-    #    response = table.put_item(
-    #        Item={
-    #            'order_id':  response['Items']['order_id'],
-    #            'timestamp' :  response['Items']['timestamp'] ,
-    #            'isCurrent': 'false',
-    #            'status': 'complete',
-    #        }
-    #   )
+def ddb_handle():
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('cafe_order_transactions')
+
+    # 1. change the previous order status
     response = table.query (
-        KeyConditionExpression=Key('order_id').eq(oid)
+        IndexName='coffeeType-isCurrent-index',
+        KeyConditionExpression=Key('coffeeType').eq('Americano') & Key('isCurrent').eq('true')
     )
-    print '--------'
+
+    global order_id
+    print '1--------' 
+    print response['Items']
+
+    if len(response['Items'])>0:
+        response = table.put_item(
+            Item={
+                'order_id':  response['Items'][0]['order_id'],
+                'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
+                'coffeeType' :  response['Items'][0]['coffeeType'] ,
+                'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
+                'timestamp' :  response['Items'][0]['timestamp'] ,
+                'isCurrent': 'false',
+                'status': 'complete',
+            }
+       )
+
+    # 2. change the current order status
+    response = table.query (
+        KeyConditionExpression=Key('order_id').eq(order_id)
+    )
+    print '2--------'
     print response['Items'][0]['order_id']
 
-    if response['Items'][0]['order_id']:
+    if len(response['Items'])>0:
         response = table.put_item(
             Item={
                 'order_id':  response['Items'][0]['order_id'],
@@ -60,9 +75,9 @@ def ddb_handle(oid):
                 'status': 'complete',
             }
         )
-    else:
-        print 'error : update isCurrent and status'
 
+    else:
+        print 'error : no true'
 
 
 def wait_until(execute_time):
@@ -212,9 +227,9 @@ class ThreadRun1(Thread):
             out_queue1_empty = True
 
             global msg_type
-            global order_id
             if msg_type == '':
-                ddb_handle(order_id) 
+                ddb_handle() 
+
 
 class ThreadRun2(Thread):
     def __init__(self, out_queue2):
@@ -239,9 +254,8 @@ class ThreadRun2(Thread):
             out_queue2_empty = True
 
             global msg_type
-            global order_id
             if msg_type == '':
-                ddb_handle(order_id) 
+                ddb_handle() 
 
 
 def main(num):
@@ -304,8 +318,7 @@ def main(num):
                 else: 
        		    print '--------result[B]--------'   
                     msg_type = ''
-                    order_id = message.body[0:1]
-
+                    order_id = message.body[0:2]
        		    work_controller("r0.txt")
                     in_queue.put(message.body)
 

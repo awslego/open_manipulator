@@ -21,8 +21,8 @@ if [ "$1" == "0" ]; then
   ## controller
   elif [ "$2" == "2" ]; then
     if [ "$3" == "true" ]; then
-      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true"
-      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true`
+      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true dynamixel_usb_port:=/dev/ttyUSB0"
+      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true dynamixel_usb_port:=/dev/ttyUSB0` 
     else
       echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false"
       `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false`
