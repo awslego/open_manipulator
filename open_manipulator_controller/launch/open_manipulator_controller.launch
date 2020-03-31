@@ -1,7 +1,7 @@
 ﻿<launch>
   <arg name="use_robot_name"         default="open_manipulator"/>
 
-  <arg name="dynamixel_usb_port"     default="/dev/ttyUSB0"/>
+  <arg name="dynamixel_usb_port"     default="/dev/ttyUSB_0"/>
   <arg name="dynamixel_baud_rate"    default="1000000"/>
 
   <arg name="control_period"         default="0.010"/>
@@ -27,10 +27,10 @@
       <param name="moveit_sample_duration"  value="$(arg moveit_sample_duration)"/>
   </node>
   
-  <node name="$(arg use_robot_name)_action_client" pkg="open_manipulator_controller" type="action_client.py" args="1" if="$(eval use_robot_name == 'open_manipulator')">
+  <node name="$(arg use_robot_name)_action_client" pkg="open_manipulator_controller" type="action_client.py" args="3" if="$(eval use_robot_name == 'open_manipulator')">
   </node>
 
-  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server1.py" args="1" if="$(eval use_robot_name == 'robot1_controller')">
+  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server1.py" args="3" if="$(eval use_robot_name == 'robot1_controller')">
   </node>
 
   <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server2.py" args="1" if="$(eval use_robot_name == 'robot2_controller')">

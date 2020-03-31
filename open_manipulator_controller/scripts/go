@@ -21,8 +21,8 @@ if [ "$1" == "0" ]; then
   ## controller
   elif [ "$2" == "2" ]; then
     if [ "$3" == "true" ]; then
-      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true dynamixel_usb_port:=/dev/ttyUSB0"
-      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true dynamixel_usb_port:=/dev/ttyUSB0` 
+      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true dynamixel_usb_port:=/dev/ttyUSB_0"
+      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true dynamixel_usb_port:=/dev/ttyUSB_0` 
     else
       echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false"
       `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false`
@@ -42,8 +42,8 @@ elif [ "$1" == "1" ]; then
     `roslaunch open_manipulator_gazebo open_manipulator_gazebo.launch use_robot_name:=robot1_controller`
   elif [ "$2" == "2" ]; then
     if [ "$3" == "true" ]; then
-      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot1_controller dynamixel_usb_port:=/dev/ttyUSB1"
-      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot1_controller dynamixel_usb_port:=/dev/ttyUSB1`
+      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot1_controller dynamixel_usb_port:=/dev/ttyUSB_1"
+      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot1_controller dynamixel_usb_port:=/dev/ttyUSB_1`
     else 
       echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false use_robot_name:=robot1_controller"
       `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false use_robot_name:=robot1_controller`
@@ -62,8 +62,8 @@ elif [ "$1" == "2" ]; then
     `roslaunch open_manipulator_gazebo open_manipulator_gazebo.launch use_robot_name:=robot2_controller`
   elif [ "$2" == "2" ]; then
     if [ "$3" == "true" ]; then
-      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot2_controller dynamixel_usb_port:=/dev/ttyUSB2"
-      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot2_controller dynamixel_usb_port:=/dev/ttyUSB2`
+      echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot2_controller dynamixel_usb_port:=/dev/ttyUSB_2"
+      `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=true use_robot_name:=robot2_controller dynamixel_usb_port:=/dev/ttyUSB_2`
     else
       echo "roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false use_robot_name:=robot2_controller"
       `roslaunch open_manipulator_controller open_manipulator_controller.launch use_platform:=false use_robot_name:=robot2_controller`
