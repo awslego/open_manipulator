@@ -58,7 +58,7 @@ class ActionServer():
 
     def work_controller(self, file_name):
         #readMovingStat()
-        setTorque("on")
+        #setTorque("on")
 
 	try:
     	    path = os.path.dirname(os.path.abspath(__file__))
@@ -115,10 +115,13 @@ class ActionServer():
                 execute_time = wait_file_read("r0.D1.tm")
                 result = wait_until(execute_time)
                 if result:
-                    self.work_controller("r0.D1.txt") 
+                    #self.work_controller("r0.D1.txt") 
+                    path = os.path.dirname(os.path.abspath(__file__))
+                    os.system(path + '/dance.sh robot2_controller')
+
             else:
                 print '\n----result[B]------'
-                #self.work_controller("r2.txt") 
+                self.work_controller("r2.txt") 
  
 
 if __name__ == "__main__" :

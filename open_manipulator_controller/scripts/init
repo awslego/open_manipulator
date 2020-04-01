@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+
+python ./r0.py ./r00.txt
+
+python ./r1.py ./r00.txt
+
+python ./r2.py ./r00.txt

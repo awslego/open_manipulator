@@ -34,37 +34,36 @@ def ddb_handle():
     table = dynamodb.Table('cafe_order_transactions')
 
     # 1. change the previous order status
-    response = table.query (
-        IndexName='coffeeType-isCurrent-index',
-        KeyConditionExpression=Key('coffeeType').eq('Americano') & Key('isCurrent').eq('true')
-    )
-
-    global order_id
-    print '1--------' 
-    print response['Items']
-
-    if len(response['Items'])>0:
-        response = table.put_item(
-            Item={
-                'order_id':  response['Items'][0]['order_id'],
-                'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
-                'coffeeType' :  response['Items'][0]['coffeeType'] ,
-                'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
-                'timestamp' :  response['Items'][0]['timestamp'] ,
-                'isCurrent': 'false',
-                'status': 'complete',
-            }
-       )
-
+    #response = table.query (
+    #    IndexName='coffeeType-isCurrent-index',
+    #    KeyConditionExpression=Key('coffeeType').eq('Mocha') & Key('isCurrent').eq('true')
+    #)
+    #
+    #global order_id
+    #print '1--------' 
+    #print response['Items']
+    #
+    #if len(response['Items'])>0:
+    #    response = table.put_item(
+    #        Item={
+    #            'order_id':  response['Items'][0]['order_id'],
+    #            'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
+    #            'coffeeType' :  response['Items'][0]['coffeeType'] ,
+    #            'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
+    #            'timestamp' :  response['Items'][0]['timestamp'] ,
+    #            'isCurrent': 'false',
+    #            'status': 'complete',
+    #        }
+    #   )
+    #
     # 2. change the current order status
     response = table.query (
         KeyConditionExpression=Key('order_id').eq(order_id)
     )
     print '2--------'
-    print response['Items'][0]['order_id']
 
     if len(response['Items'])>0:
-        response = table.put_item(
+        response1 = table.put_item(
             Item={
                 'order_id':  response['Items'][0]['order_id'],
                 'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
@@ -75,6 +74,19 @@ def ddb_handle():
                 'status': 'complete',
             }
         )
+        time.sleep(15)
+        response2 = table.put_item(
+            Item={
+                'order_id':  response['Items'][0]['order_id'],
+                'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
+                'coffeeType' :  response['Items'][0]['coffeeType'] ,
+                'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
+                'timestamp' :  response['Items'][0]['timestamp'] ,
+                'isCurrent': 'false',
+                'status': 'complete',
+            }
+        )
+
 
     else:
         print 'error : no true'
@@ -136,9 +148,9 @@ def call_server(topic_name):
     return result
 
 
-def work_controller(file_name):
+def work_controller(file_name): 
     #readMovingStat()
-    setTorque("on")
+    #setTorque("on")
 
     try:
        path = os.path.dirname(os.path.abspath(__file__))
@@ -151,13 +163,13 @@ def work_controller(file_name):
 
            if words[0] == "G" :
                moveGripper(p[0], p[1])
-               time.sleep(float(p[1]))
+               time.sleep(float(p[1])-float(0.2))
            elif words[0] == "J" :
                moveJointSpace(p[0], p[1], p[2], p[3], p[4])
-               time.sleep(float(p[4]))
+               time.sleep(float(p[4])-float(0.2))
            elif words[0] == "T" :
                moveTaskSpace(p[0], p[1], p[2], p[3])
-               time.sleep(float(p[3]))
+               time.sleep(float(p[3])-float(0.2))
 
     except:
         print('--------ERROR2------------')
@@ -282,8 +294,7 @@ def main(num):
         t2.start()
 
     while 1:
-
-        messages = sqs_queue.receive_messages(WaitTimeSeconds=5, MaxNumberOfMessages=10)
+        messages = sqs_queue.receive_messages(WaitTimeSeconds=1, MaxNumberOfMessages=10)
         cnt = 0;
         for message in messages:
             print("SQS received : {0}".format(message.body))
@@ -291,7 +302,7 @@ def main(num):
             try:
 		global in_queue_empty
 		if not in_queue_empty:
-		    time.sleep(5)
+		    time.sleep(1)
        		    continue
                 
                 global start 
@@ -311,8 +322,9 @@ def main(num):
                     
                     result = wait_until(message.body[3:])
                     if result:
-                        work_controller("r0.D1.txt")
-            
+                        #work_controller("r0.D1.txt")
+                        path = os.path.dirname(os.path.abspath(__file__))
+                        os.system(path + "/dance.sh open_manipulator")
 	            in_queue_empty = True
 
                 else: 

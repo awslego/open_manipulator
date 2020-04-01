@@ -1,12 +1,14 @@
 import boto3
 import sys
 
-def main(queue, msg):
+def main(num, msg):
     sqs = boto3.resource('sqs')
 
     # Retrieving a queue by its name
-    queue = sqs.get_queue_by_name(QueueName='cafe-menu-' + queue)
+    print "--->" + num 
+    queue = sqs.get_queue_by_name(QueueName='cafe-menu-' + num)
 
+    print "--->" + str(queue)
     # Create a new message
     response = queue.send_message(MessageBody=msg)
 
@@ -20,4 +22,5 @@ if __name__ == "__main__" :
         print("sqs-messnage-sender.py [1|2|3] [msg]")
         exit(0)
     else:
+        print "--->" + sys.argv[1]
         main(sys.argv[1], sys.argv[2])
