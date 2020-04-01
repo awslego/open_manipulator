@@ -93,9 +93,9 @@ def ddb_handle():
 
 
 def wait_until(execute_time):
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S') 
-    t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S') 
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+    t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S.%f') 
+    t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S.%f') 
     
     #print t1 
     #print t2 
@@ -322,9 +322,9 @@ def main(num):
                     
                     result = wait_until(message.body[3:])
                     if result:
-                        #work_controller("r0.D1.txt")
-                        path = os.path.dirname(os.path.abspath(__file__))
-                        os.system(path + "/dance.sh open_manipulator")
+                        work_controller("r0.D1.txt")
+                        #path = os.path.dirname(os.path.abspath(__file__))
+                        #os.system(path + "/dance.sh open_manipulator")
 	            in_queue_empty = True
 
                 else: 

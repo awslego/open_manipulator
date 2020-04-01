@@ -27,9 +27,9 @@ def wait_file_read(file_name):
 
 
 def wait_until(execute_time):
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S')
-    t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S')
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+    t1 = datetime.strptime(execute_time, '%Y-%m-%d %H:%M:%S.%f')
+    t2 = datetime.strptime(current_time, '%Y-%m-%d %H:%M:%S.%f')
 
     #print t1
     #print t2
@@ -71,13 +71,13 @@ class ActionServer():
 
                 if words[0] == "G" :
                     moveGripper(p[0], p[1])
-                    time.sleep(float(p[1]))
+                    time.sleep(float(p[1])-float(0.2))
                 elif words[0] == "J" :
                     moveJointSpace(p[0], p[1], p[2], p[3], p[4])
-                    time.sleep(float(p[4]))
+                    time.sleep(float(p[4])-float(0.2))
                 elif words[0] == "T" :
                     moveTaskSpace(p[0], p[1], p[2], p[3])
-                    time.sleep(float(p[3]))
+                    time.sleep(float(p[3])-float(0.2))
 
         except:
             print('--------ERROR2------------')
@@ -115,9 +115,9 @@ class ActionServer():
                 execute_time = wait_file_read("r0.D1.tm")
                 result = wait_until(execute_time)
                 if result:
-                    #self.work_controller("r0.D1.txt") 
-                    path = os.path.dirname(os.path.abspath(__file__))
-                    os.system(path + '/dance.sh robot1_controller')
+                    self.work_controller("r0.D1.txt") 
+                    #path = os.path.dirname(os.path.abspath(__file__))
+                    #os.system(path + '/dance.sh robot1_controller')
 
             else:
                 print '\n----result[B]------'
