@@ -12,7 +12,10 @@ $ git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 $ git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
 $ git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
 $ git clone https://github.com/ROBOTIS-GIT/robotis_manipulator.git
+$ git clone https://github.com/ROBOTIS-Will/open_manipulator_cli.git
+
 # aws package install
+$ git clone https://github.com/awslego/moveTaskSpace.git
 $ git clone https://github.com/awslego/open_manipulator.git
 $ git clone https://github.com/awslego/open_manipulator_msgs.git
 $ git clone https://github.com/awslego/open_manipulator_simulations.git

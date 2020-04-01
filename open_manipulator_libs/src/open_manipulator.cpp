@@ -37,7 +37,7 @@ void OpenManipulator::initOpenManipulator(bool using_actual_robot_state, STRING 
   uint8_t joint4_id =  14;
   uint8_t gripper_id = 15;
 
-  if (usb_port == "/dev/ttyUSB1")
+  if (usb_port == "/dev/ttyUSB_1")
   {
     joint1_id =  1;
     joint2_id =  2;
@@ -45,7 +45,7 @@ void OpenManipulator::initOpenManipulator(bool using_actual_robot_state, STRING 
     joint4_id =  4;
     gripper_id = 5;
   } 
-  else if (usb_port == "/dev/ttyUSB2")
+  else if (usb_port == "/dev/ttyUSB_2")
   {
     joint1_id =  6;
     joint2_id =  7;
