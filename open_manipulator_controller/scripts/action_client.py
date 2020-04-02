@@ -29,38 +29,14 @@ out_queue2_empty = True;
 msg_type = ''
 order_id = ''
 
-def ddb_handle():
+def ddb_handle(p_isCurrent, p_status):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('cafe_order_transactions')
 
-    # 1. change the previous order status
-    #response = table.query (
-    #    IndexName='coffeeType-isCurrent-index',
-    #    KeyConditionExpression=Key('coffeeType').eq('Mocha') & Key('isCurrent').eq('true')
-    #)
-    #
-    #global order_id
-    #print '1--------' 
-    #print response['Items']
-    #
-    #if len(response['Items'])>0:
-    #    response = table.put_item(
-    #        Item={
-    #            'order_id':  response['Items'][0]['order_id'],
-    #            'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
-    #            'coffeeType' :  response['Items'][0]['coffeeType'] ,
-    #            'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
-    #            'timestamp' :  response['Items'][0]['timestamp'] ,
-    #            'isCurrent': 'false',
-    #            'status': 'complete',
-    #        }
-    #   )
-    #
-    # 2. change the current order status
+    global order_id
     response = table.query (
         KeyConditionExpression=Key('order_id').eq(order_id)
     )
-    print '2--------'
 
     if len(response['Items'])>0:
         response1 = table.put_item(
@@ -70,23 +46,10 @@ def ddb_handle():
                 'coffeeType' :  response['Items'][0]['coffeeType'] ,
                 'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
                 'timestamp' :  response['Items'][0]['timestamp'] ,
-                'isCurrent': 'true',
-                'status': 'complete',
+                'isCurrent': p_isCurrent,
+                'status': p_status,
             }
         )
-        time.sleep(15)
-        response2 = table.put_item(
-            Item={
-                'order_id':  response['Items'][0]['order_id'],
-                'coffeeSize' :  response['Items'][0]['coffeeSize'] ,
-                'coffeeType' :  response['Items'][0]['coffeeType'] ,
-                'beanOrigin' :  response['Items'][0]['beanOrigin'] ,
-                'timestamp' :  response['Items'][0]['timestamp'] ,
-                'isCurrent': 'false',
-                'status': 'complete',
-            }
-        )
-
 
     else:
         print 'error : no true'
@@ -238,9 +201,6 @@ class ThreadRun1(Thread):
             global out_queue1_empty
             out_queue1_empty = True
 
-            global msg_type
-            if msg_type == '':
-                ddb_handle() 
 
 
 class ThreadRun2(Thread):
@@ -265,9 +225,6 @@ class ThreadRun2(Thread):
             global out_queue2_empty
             out_queue2_empty = True
 
-            global msg_type
-            if msg_type == '':
-                ddb_handle() 
 
 
 def main(num):
@@ -331,8 +288,16 @@ def main(num):
        		    print '--------result[B]--------'   
                     msg_type = ''
                     order_id = message.body[0:2]
-       		    work_controller("r0.txt")
+        
+                    ddb_handle('true', 'ready') 
+       		    
+                    work_controller("r0.txt")
                     in_queue.put(message.body)
+                    
+                    time.sleep(20) 
+                    ddb_handle('true', 'completed') 
+                    time.sleep(10) 
+                    ddb_handle('false', 'completed') 
 
             except rospy.ROSInterruptException as e:
                 print 'Something went wrong:', e
