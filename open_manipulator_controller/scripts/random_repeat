@@ -20,7 +20,8 @@ if [ "$#" -eq 1 ]; then
        python ./r1.py ./r11.txt &
        sleep 2
        python ./r2.py ./r11.txt &
-       done
+
        sleep 10
+    done
 fi
 echo "\n"
