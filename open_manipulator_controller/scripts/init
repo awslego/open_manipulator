@@ -2,8 +2,19 @@
 
 
 
-python ./r0.py ./r00.txt
+## 파라미터가 없으면 종료 
+if [ "$#" -lt 1 ]; then
+    echo "$# all init----"
+    python ./r0.py ./r00.txt
+    python ./r1.py ./r00.txt
+    python ./r2.py ./r00.txt
+    exit 1
+fi
 
-python ./r1.py ./r00.txt
 
-python ./r2.py ./r00.txt
+if [ "$#" -eq 1 ]; then
+    echo "$1 init----"
+    python ./r$1.py ./r00.txt
+    exit 1
+fi
+exit 1

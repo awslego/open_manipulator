@@ -113,7 +113,7 @@ def call_server(topic_name):
 
 def work_controller(file_name): 
     #readMovingStat()
-    #setTorque("on")
+    setTorque("on")
 
     try:
        path = os.path.dirname(os.path.abspath(__file__))

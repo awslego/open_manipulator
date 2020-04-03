@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+## 파라미터가 없으면 종료 
+if [ "$#" -lt 1 ]; then
+    echo "$# all init----"
+    python ./r0.py ./r01.txt &
+    sleep 1
+    python ./r1.py ./r02.txt &
+    sleep 2
+    python ./r2.py ./r11.txt &
+    exit 1
+fi
+
+## 파라미터가 1
+if [ "$#" -eq 1 ]; then
+    echo "$1 run ----"
+    if [ "$1" -eq 0 ]; then
+        python ./r$1.py ./r01.txt
+    elif [ "$1" -eq 1 ]; then
+        python ./r$1.py ./r02.txt
+    else
+        python ./r$1.py ./r11.txt
+    fi
+fi
