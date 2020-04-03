@@ -295,9 +295,9 @@ def main(num):
                     in_queue.put(message.body)
                     
                     time.sleep(20) 
-                    ddb_handle('true', 'completed') 
-                    time.sleep(10) 
-                    ddb_handle('false', 'completed') 
+                    ddb_handle('true', 'complete') 
+                    time.sleep(15) 
+                    ddb_handle('false', 'complete') 
 
             except rospy.ROSInterruptException as e:
                 print 'Something went wrong:', e

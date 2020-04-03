@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+## 파라미터가 없으면 종료 
+if [ "$#" -lt 1 ]; then
+    echo "$# is Illegal number of parameters."
+    echo "Usage: $0 1 'A1|Brazil|Large'"
+    echo "Usage: $0 1 'D1|2020-03-17 22:10:00.000000'"
+    exit 1
+fi
+
+if [ "$1" -eq 0 ]; then
+    echo "sqs sender : $2"
+    python ./python-sqs-consumer/sqs-message-sender.py "1" "A1|Brazil|large"
+    python ./python-sqs-consumer/sqs-message-sender.py "2" "B1|Braizl|lgarge"
+    python ./python-sqs-consumer/sqs-message-sender.py "3" "C1|brazil|large"
+    exit 1
+fi
+
