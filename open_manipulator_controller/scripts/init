@@ -5,9 +5,11 @@
 ## 파라미터가 없으면 종료 
 if [ "$#" -lt 1 ]; then
     echo "$# all init----"
-    python ./r0.py ./r00.txt
-    python ./r1.py ./r00.txt
-    python ./r2.py ./r00.txt
+    python ./r0.py ./r00.txt &
+    sleep 1
+    python ./r1.py ./r00.txt &
+    sleep 1
+    python ./r2.py ./r00.txt &
     exit 1
 fi
 
