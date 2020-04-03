@@ -6,7 +6,7 @@ if [ "$#" -lt 1 ]; then
     echo "only one play------"
     python ./r0.py ./r01.txt &
     sleep 1
-    python ./r1.py ./r11.txt &
+    python ./r1.py ./r02.txt &
     sleep 2
     python ./r2.py ./r11.txt &
     exit 1
@@ -17,7 +17,7 @@ if [ "$#" -eq 1 ]; then
        echo "$ith play ---"
        python ./r0.py ./r01.txt &
        sleep 1
-       python ./r1.py ./r11.txt &
+       python ./r1.py ./r02.txt &
        sleep 2
        python ./r2.py ./r11.txt &
 
