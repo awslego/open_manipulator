@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+## 파라미터가 없으면 종료 
+if [ "$#" -lt 1 ]; then
+    echo "only one play------"
+    python ./r0.py ./r01.txt &
+    sleep 1
+    python ./r1.py ./r11.txt &
+    sleep 2
+    python ./r2.py ./r11.txt &
+    exit 1
+fi
+
+if [ "$#" -eq 1 ]; then
+    for (( i=0; i<$1; i++ )) do
+       echo "$ith play ---"
+       python ./r0.py ./r01.txt &
+       sleep 1
+       python ./r1.py ./r11.txt &
+       sleep 2
+       python ./r2.py ./r11.txt &
+       done
+fi
+echo "\n"

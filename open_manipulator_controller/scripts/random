@@ -5,7 +5,7 @@
 if [ "$#" -lt 1 ]; then
     echo "$# all init----"
     python ./r0.py ./r01.txt &
-    sleep 1
+    sleep 2
     python ./r1.py ./r02.txt &
     sleep 2
     python ./r2.py ./r11.txt &
@@ -23,3 +23,5 @@ if [ "$#" -eq 1 ]; then
         python ./r$1.py ./r11.txt
     fi
 fi
+echo "\n"
+
