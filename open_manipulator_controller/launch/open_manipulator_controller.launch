@@ -33,7 +33,5 @@
   <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server1.py" args="3" if="$(eval use_robot_name == 'robot1_controller')">
   </node>
 
-  <node name="$(arg use_robot_name)_action_server" pkg="open_manipulator_controller" type="action_server2.py" args="1" if="$(eval use_robot_name == 'robot2_controller')">
-  </node>
 
 </launch>

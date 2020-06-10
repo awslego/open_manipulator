@@ -25,8 +25,7 @@ from boto3.dynamodb.conditions import Key
 
 in_queue_empty = True;
 out_queue1_empty = True;
-#out_queue2_empty = True;
-out_queue2_empty = False;
+out_queue2_empty = True;
 msg_type = ''
 order_id = ''
 
@@ -252,7 +251,7 @@ def main(num):
         t2.start()
 
     while 1:
-        messages = sqs_queue.receive_messages(WaitTimeSeconds=20, MaxNumberOfMessages=10)
+        messages = sqs_queue.receive_messages(WaitTimeSeconds=1, MaxNumberOfMessages=10)
         cnt = 0;
         for message in messages:
             print("SQS received : {0}".format(message.body))

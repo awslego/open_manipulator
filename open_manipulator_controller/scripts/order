@@ -16,4 +16,24 @@ if [ "$1" -eq 0 ]; then
     python ./python-sqs-consumer/sqs-message-sender.py "3" "C1|brazil|large"
     exit 1
 fi
-
+if [ "$1" -eq 1 ]; then
+    echo "sqs sender : $2"
+    python ./python-sqs-consumer/sqs-message-sender.py "1" "A1|Brazil|large"
+    python ./python-sqs-consumer/sqs-message-sender.py "2" "B1|Braizl|lgarge"
+    python ./python-sqs-consumer/sqs-message-sender.py "3" "C1|brazil|large"
+    exit 1
+fi
+if [ "$1" -eq 2 ]; then
+    echo "sqs sender : $2"
+    python ./python-sqs-consumer/sqs-message-sender.py "1" "A1|Brazil|large"
+    python ./python-sqs-consumer/sqs-message-sender.py "2" "B1|Braizl|lgarge"
+    python ./python-sqs-consumer/sqs-message-sender.py "3" "C1|brazil|large"
+    exit 1
+fi
+if [ "$1" -eq 3 ]; then
+    echo "sqs sender : $2"
+    python ./python-sqs-consumer/sqs-message-sender.py "1" "A1|Brazil|large"
+    python ./python-sqs-consumer/sqs-message-sender.py "2" "B1|Braizl|lgarge"
+    python ./python-sqs-consumer/sqs-message-sender.py "3" "C1|brazil|large"
+    exit 1
+fi

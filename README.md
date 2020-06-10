@@ -22,6 +22,11 @@ $ git clone https://github.com/awslego/open_manipulator_simulations.git
 
 $ cd ~/catkin_ws && catkin_make
 
+# boto3 install
+$ sudo apt-get install python-pip
+$ sudo pip install boto3
+$ aws configure 
+
 # [0]TH Robot for simulation
 # argc : 2
 # argv : [robot-num] [module-num] (0: gazebo-all 1:gazebo, 2:controller, 3:gui)

@@ -8,8 +8,8 @@ if [ "$#" -lt 1 ]; then
     python ./r0.py ./r00.txt &
     sleep 1
     python ./r1.py ./r00.txt &
-    sleep 1
-    python ./r2.py ./r00.txt &
+    #sleep 1
+    #python ./r2.py ./r00.txt &
     exit 1
 fi
 
